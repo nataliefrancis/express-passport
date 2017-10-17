@@ -1,15 +1,24 @@
 var passport = require("passport")
 
 // GET /signup
-function getSignup(request, response) {
+function getSignup(request, response, next) {
+	response.render('signup', {message : request.flash('signupMessage')});
 }
 
 // POST /signup
-function postSignup(request, response) {
+function postSignup(request, response, next) {
+	let signupStrategy = passport.authenticate('local-signup', {
+		successRedirect: '/',
+		failureRedirect: '/signup',
+		failureFlash: true
+	});
+
+	return signupStrategy(request, response, next);
 }
 
 // GET /login
-function getLogin(request, response) { 
+function getLogin(request, response,) { 
+
 }
 
 // POST /login 
